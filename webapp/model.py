@@ -38,3 +38,4 @@ class Event(db.Model):
         return '<Event {} {} {} {} {} {} {} {}>'.format(self.event_name, 
         self.date_start, self.date_finish, self.country_id, self.type_id, 
         self.flight, self.meals, self.accommodation)
+        

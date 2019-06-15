@@ -10,3 +10,4 @@ def create_app():
     db.init_app(app)
 
     return app
+    

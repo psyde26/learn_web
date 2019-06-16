@@ -14,11 +14,11 @@ country_dict = {
     3: 'Тайланд',
 }
 
-type_dict = [
-    {'1': 'Cерфинг'},
-    {'2': 'Вейк'},
-    {'3': 'Кайт'},
-]
+type_dict = {
+    1: 'Cерфинг',
+    2: 'Вейк',
+    3: 'Кайт',
+}
 
 
 for event in event_dict:
@@ -29,10 +29,10 @@ for event in event_dict:
     date_start = date_start.strftime('%d.%m.%Y')
     date_finish = date_finish.strftime('%d.%m.%Y')
 
-    cntr = event['country_id']
-    country = country_dict[cntr]
+    country = country_dict[event['country_id']]
+    event_type = type_dict[event['type_id']]
 
-    print(country)
+
 
 
     if event['accomodation'] == True:
@@ -51,4 +51,4 @@ for event in event_dict:
         meals = 'Не включено'
     
 
-    print(f'{event_name}, {date_start} - {date_finish} в стране , питане {meals}, перелет {flight}, проживание {accomodation}')
+    print(f'{event_name}, {date_start} - {date_finish} {event_type} Страна: {country}, питане {meals}, перелет {flight}, проживание {accomodation}')

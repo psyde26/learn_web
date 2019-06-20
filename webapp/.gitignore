@@ -2,11 +2,10 @@
 __pycache__/
 *.py[cod]
 *$py.class
+webapp.db
 *.db
-
 config.py
 run.bat
-webapp.db
 
 # C extensions
 *.so
@@ -107,4 +106,3 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-

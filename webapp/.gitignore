@@ -4,7 +4,7 @@ __pycache__/
 *$py.class
 webapp.db
 *.db
-config.py
+config_local.py
 run.bat
 
 # C extensions

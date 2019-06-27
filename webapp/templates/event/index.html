@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}Index{% endblock %}
+
+{% block title %} {{ page_title}} {% endblock %}
 {% block head %}
     {{ super() }}
     <style type="text/css">
@@ -11,4 +12,3 @@
       Event content.
     </p>
 {% endblock %}
-

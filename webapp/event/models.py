@@ -1,8 +1,7 @@
-from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
-
-db = SQLAlchemy()
-
+from webapp.db import db
 
 class Country(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -10,7 +9,7 @@ class Country(db.Model):
     events = db.relationship('Event', backref='country', lazy=True)
 
     def __repr__(self):
-        return '<Country {}>'.format(self.county_name)
+        return '<Country {}>'.format(self.country_name)
 
 
 class Type(db.Model):
@@ -24,7 +23,7 @@ class Type(db.Model):
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    event_name = db.Column(db.String, nullable=False)
+    event_name = db.Column(db.String(100), nullable=False)
     date_start = db.Column(db.DateTime, nullable=False)
     date_finish = db.Column(db.DateTime, nullable=False)
     country_id = db.Column(db.Integer, db.ForeignKey('country.id'), 

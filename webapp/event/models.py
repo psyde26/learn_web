@@ -31,7 +31,9 @@ class Event(db.Model):
     type_id = db.Column(db.Integer, db.ForeignKey('type.id'), nullable=False)
     flight = db.Column(db.Boolean, nullable=False)
     meals = db.Column(db.Boolean, nullable=False)
-    accommodation = db.Column(db.Boolean, nullable=False)    
+    accommodation = db.Column(db.Boolean, nullable=False)  
+    event_creator_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    event_creator = db.relationship('User', backref='created_events')
 
     def __repr__(self):
         return '<Event {} {} {} {} {} {} {} {}>'.format(self.event_name, 

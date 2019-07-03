@@ -33,6 +33,7 @@ def upgrade():
     sa.Column('username', sa.String(length=64), nullable=True),
     sa.Column('password', sa.String(length=128), nullable=True),
     sa.Column('role', sa.String(length=10), nullable=True),
+    sa.Column('email', sa.String(length=50), unique=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_user_role'), 'user', ['role'], unique=False)
@@ -47,6 +48,7 @@ def upgrade():
     sa.Column('flight', sa.Boolean(), nullable=False),
     sa.Column('meals', sa.Boolean(), nullable=False),
     sa.Column('accommodation', sa.Boolean(), nullable=False),
+    sa.Column('event_creator_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['country_id'], ['country.id'], ),
     sa.ForeignKeyConstraint(['type_id'], ['type.id'], ),
     sa.PrimaryKeyConstraint('id')

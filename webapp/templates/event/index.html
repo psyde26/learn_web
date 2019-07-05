@@ -1,14 +1,49 @@
 {% extends "base.html" %}
 
 {% block title %} {{ page_title}} {% endblock %}
-{% block head %}
-    {{ super() }}
-    <style type="text/css">
-        .important { color: #336699; }
-    </style>
-{% endblock %}
-{% block content %}
-    <p class="important">
-      Event content.
-    </p>
-{% endblock %}
+
+
+    {% block content %}
+    <div class = "row">
+                <div class="col-8">
+                        <h2>Доступные кемпы</h2>
+                        
+                            {% for event in events_list %}
+                            
+                            <h3>{{ event.event_name }}</h3>
+                           <p>с {{ event.date_start }} по {{ event.date_finish }}</p>
+                           <p>Страна: {{ event.country_id }}</p>
+                           <p>Вид спорта: {{ event.type_id  }}</p>
+                           <p>Проживание 
+                               {% if not event.acoomodatinon %} 
+                               <!-- не понял почему if not -->
+                               Включено
+                               {% else %}
+                               Не включено
+                               {% endif %}
+                           </p>
+                           <p>Перелет 
+                                {% if not event.flight %}
+                                Включено
+                                {% else %}
+                                Не включено
+                                {% endif %}
+                            </p>
+                            <p>Питание
+                                {% if not event.meals %}
+                                Включено
+                                {% else %}
+                                Не включено
+                                {% endif %}
+                            </p>
+       
+        
+                            
+                            <hr />
+                            {% endfor %}
+                        
+                </div>
+        </div>
+    {% endblock %}
+
+

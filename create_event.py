@@ -24,7 +24,7 @@ with app.app_context():
         date_finish=date_finish,
         country_id = 'Россия',
         type_id = 'Кайт',
-        flight = True,
+        flight = True,  
         meals = True,
         accommodation = True)
 

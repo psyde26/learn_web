@@ -51,8 +51,8 @@ def create_event():
 def subscribe(ev_id):
    
     new_subscribe = UserEvent(
-            sub_user = current_user.id,
-            sub_event = ev_id
+            user_id = current_user.id,
+            event_id = ev_id
     )
     db.session.add(new_subscribe)
     db.session.commit()

@@ -22,11 +22,13 @@ class EventForm(FlaskForm):
         render_kw={"class": "form-control"}
     )
     country_id = SelectField(
+        'Страна',
         coerce = int,
         validators=[DataRequired()], 
         render_kw={"class": "form-control"}
     )
     type_id = SelectField(
+        'Вид спорта',
         coerce = int,
         validators=[DataRequired()],  
         render_kw={"class": "form-control"}

@@ -1,3 +1,4 @@
+from flask import url_for
 from flask_login import UserMixin
 from datetime import date
 
@@ -39,6 +40,11 @@ class Event(db.Model):
         return '<Event {} {} {} {} {} {} {} {} {}>'.format(self.event_name, 
         self.date_start, self.date_finish, self.country_id, self.type_id, 
         self.flight, self.meals, self.accommodation, self.event_creator_id)
+    
+    @property
+    def subscribe_link(self):
+        if self.id:
+            return url_for('event.subscribe', ev_id=self.id)
 
 #Subscribe
 class UserEvent(db.Model):

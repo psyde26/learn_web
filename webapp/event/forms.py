@@ -22,12 +22,12 @@ class EventForm(FlaskForm):
         render_kw={"class": "form-control"}
     )
     country_id = SelectField(
-        u'Страна', 
+        coerce = int,
         validators=[DataRequired()], 
         render_kw={"class": "form-control"}
     )
     type_id = SelectField(
-        u'Вид спорта',
+        coerce = int,
         validators=[DataRequired()],  
         render_kw={"class": "form-control"}
     )
@@ -49,4 +49,4 @@ class EventForm(FlaskForm):
     submit = SubmitField('Отправить',  render_kw={"class": "btn btn-primary"})
 
 class AllEventsForm(FlaskForm):
-    submit = SubmitField('Подписаться на событие',  render_kw={"class": "btn btn-primary"})
+    submit = SubmitField('Отправить',  render_kw={"class": "btn btn-primary"})

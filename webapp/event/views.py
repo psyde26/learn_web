@@ -47,17 +47,17 @@ def create_event():
         flash('Создано новое событие')
         return redirect(url_for('event.event'))
 
-@blueprint.route('/subscribe', methods=['POST'])
-def subscribe():
-        index = request.form['index']
-        new_subscribe = UserEvent(
-                sub_user = current_user.id,
-                sub_event = index
-        )
-        db.session.add(new_subscribe)
-        db.session.commit()
-        flash('Вы подписались на событие')
-        return redirect(url_for('event.event'))
+@blueprint.route('/<int:ev_id>/subscribe', methods=['GET'])
+def subscribe(ev_id):
+   
+    new_subscribe = UserEvent(
+            sub_user = current_user.id,
+            sub_event = ev_id
+    )
+    db.session.add(new_subscribe)
+    db.session.commit()
+    flash('Вы подписались на событие')
+    return redirect(url_for('event.event'))
 
  
 

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}{{ page_title }}{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+{% endblock %}
+{% block content %}
+    <p class="important">
+      <div class='container'>
+        <h1>{{ page_title }}</h1>
+    <div class='row'>
+        <div class='col-4'>
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="alert alert-warning" role="alert">
+              {% for message in messages %}
+                {{ message }}<br>
+              {% endfor %}
+            </div>
+            {% endif %}
+          {% endwith %}
+            <form action="{{ url_for('event.create_event') }}" method="POST">
+                {{ form.hidden_tag() }}
+                <div class='form-group'>
+                    {{ form.event_name.label }}
+                    {{ form.event_name() }}
+                </div>
+                <div class='form-group'>
+                    {{ form.date_start.label }}
+                    {{ form.date_start() }}
+                </div>
+                <div class='form-group'>
+                    {{ form.date_finish.label }}
+                    {{ form.date_finish() }}
+                </div> 
+                <div class='form-group'>
+                    {{ form.country_id.label }}
+                    {{ form.country_id() }}
+                </div>
+                <div class='form-group'>
+                    {{ form.type_id.label }}
+                    {{ form.type_id() }}
+                </div>
+                <div class='form-group'>
+                    {{ form.flight.label }}
+                    {{ form.flight() }}
+                <div class='form-group'>
+                    {{ form.meals.label }}
+                    {{ form.meals() }}
+                </div>
+                <div class='form-group'>
+                    {{ form.accommodation.label }}
+                    {{ form.accommodation() }}
+                </div> 
+                {{ form.submit() }}
+            </form>
+        </div>
+        <div class='col-8'>
+        </div>
+    </div>
+    </div>
+    </p>
+{% endblock %}

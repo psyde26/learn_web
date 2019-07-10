@@ -1,4 +1,6 @@
 webapp.db
+#VSCODE
+.vscode
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -6,6 +8,7 @@ __pycache__/
 *$py.class
 config_local.py
 run.bat
+run.sh
 
 # C extensions
 *.so

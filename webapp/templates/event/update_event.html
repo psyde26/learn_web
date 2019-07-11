@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %} {{ page_title}} {% endblock %}
+{% block content %}
+    <form method="POST" id="target"> 
+        <div class="form-group">
+            <input type="text" class="form-control" name="Название события" value="{{ data.event_name }}">
+        </div>
+        <div class="form-group">
+                <input 
+                    type="text" 
+                    class="form-control datetime"
+                    name="Дата начала события" 
+                    value="{{ data.date_start }}"
+                >
+            </div>
+            <div class="form-group">
+                <input 
+                    type="text"
+                    class="form-control datetime" 
+                    name="Дата окончания"
+                    value="{{ data.date_finish }}"
+                >
+            </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="Страна" value="{{ data.country_id }}">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="Вид спорта" value="{{ data.type_id }}">
+        </div>
+        <div class="form-group">
+                <input type="text" class="form-control" name="Перелет" value="{{ data.flight }}">
+        </div>
+        <div class="form-group">
+                <input type="text" class="form-control" name="Питание" value="{{ data.meals }}">
+        </div>
+        <div class="form-group">
+                <input type="text" class="form-control" name="Проживание" value="{{ data.accommodation }}">
+        </div>
+        <button type="submit" class="btn btn-block btn-primary">Обновить</button>
+    </form>
+{% endblock %}

@@ -1,5 +1,6 @@
 from flask_login import UserMixin
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask import url_for
+from datetime import date
 
 from webapp.db import db
 
@@ -24,8 +25,8 @@ class Type(db.Model):
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     event_name = db.Column(db.String(100), nullable=False)
-    date_start = db.Column(db.DateTime, nullable=False)
-    date_finish = db.Column(db.DateTime, nullable=False)
+    date_start = db.Column(db.DateTime)
+    date_finish = db.Column(db.DateTime)
     country_id = db.Column(db.Integer, db.ForeignKey('country.id'), 
     nullable=False)
     type_id = db.Column(db.Integer, db.ForeignKey('type.id'), nullable=False)
@@ -36,7 +37,11 @@ class Event(db.Model):
     event_creator = db.relationship('User', backref='created_events')
 
     def __repr__(self):
-        return '<Event {} {} {} {} {} {} {} {}>'.format(self.event_name, 
+        return '<Event {} {} {} {} {} {} {} {} {}>'.format(self.event_name, 
         self.date_start, self.date_finish, self.country_id, self.type_id, 
-        self.flight, self.meals, self.accommodation)
+        self.flight, self.meals, self.accommodation, self.event_creator_id)
         
+    @property
+    def subscribe_link(self):
+        if self.id:
+            return url_for('event.subscribe', ev_id=self.id)

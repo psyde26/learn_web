@@ -32,8 +32,8 @@ def process_login():
 @blueprint.route('/logout')
 def logout():
     logout_user()
-    flash('Вы успешно разлогинились')
     return redirect(url_for('home.index'))
+    flash('Вы успешно разлогинились')
 
 @blueprint.route('/register')
 def register():
@@ -58,3 +58,4 @@ def process_reg():
 
     flash('Пожалуйста, исправьте ошибки в форме')
     return redirect('user.register')
+    

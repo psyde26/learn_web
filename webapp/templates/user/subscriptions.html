@@ -5,7 +5,7 @@
 {% block content %}
   <div class="container">
     <div class="row">
-    {% for event in events_list %}
+    <!-- {% for event in events_list %}
         <div class="col">
         <h3>{{ event.event_name }}</h3>
         <p>с {{ event.date_start.strftime('%d.%m.%Y') }} по {{ event.date_finish.strftime('%d.%m.%Y') }}</p>
@@ -32,9 +32,8 @@
             Не включено
             {% endif %}
         </p>
-        <a href="{{ event.subscribe_link }}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Подписаться</a>
-        <hr />
-		  
+		<hr /> -->
+
     </div> 
     {% endfor %}
                         

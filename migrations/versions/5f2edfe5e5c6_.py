@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 0a7f04a6631e
+Revision ID: 5f2edfe5e5c6
 Revises: aee53a45b05c
-Create Date: 2019-07-03 00:38:10.080565
+Create Date: 2019-07-11 11:04:07.339111
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0a7f04a6631e'
+revision = '5f2edfe5e5c6'
 down_revision = 'aee53a45b05c'
 branch_labels = None
 depends_on = None
@@ -22,7 +22,7 @@ def upgrade():
         batch_op.alter_column('event_creator_id',
                existing_type=sa.INTEGER(),
                nullable=True)
-        batch_op.create_foreign_key(None, 'user', ['event_creator_id'], ['id'])
+        batch_op.create_foreign_key(op.f('event_creator_id'), 'user', ['event_creator_id'], ['id'])
 
     # ### end Alembic commands ###
 

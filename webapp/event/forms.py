@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, DateField, StringField, SubmitField, SelectField
+from wtforms import BooleanField, DateField, StringField, SubmitField, SelectField, IntegerField
 from wtforms.validators import DataRequired
 from wtforms.fields.html5 import DateField
 
@@ -20,15 +20,18 @@ class EventForm(FlaskForm):
         validators=[DataRequired()],
         format='%Y-%m-%d',
         render_kw={"class": "form-control"}
-        )
+    )
     country_id = SelectField(
-        u'Страна', 
+        'Страна',
+        coerce=int,
         validators=[DataRequired()], 
         render_kw={"class": "form-control"}
     )
     type_id = SelectField(
-        u'Вид спорта',  
-        render_kw={"class": "btn btn-primary"}
+        'Вид спорта',
+        coerce=int,
+        validators=[DataRequired()],  
+        render_kw={"class": "form-control"}
     )
     flight = BooleanField(
         'Перелет включен в стоимость',
@@ -45,4 +48,4 @@ class EventForm(FlaskForm):
         default=False, 
         render_kw={"class": "form-check-input"}
     )
-    submit = submit = SubmitField('Отправить',  render_kw={"class": "btn btn-primary"})
+    submit = SubmitField('Отправить',  render_kw={"class": "btn btn-primary"})

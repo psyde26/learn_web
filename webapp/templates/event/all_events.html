@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>{{ page_title2 }}</h1>
+<div class="row">
+    <table border="3" class="table" id="Event">
+        <thead>
+            <tr>
+                <th scope="col">Название события</th>
+                <th scope="col">Дата начала события</th>
+                <th scope="col">Дата окончания события</th>
+                <th scope="col">Страна</th>
+                <th scope="col">Вид спорта</th>
+                <th scope="col">Перелет</th>
+                <th scope="col">Питание</th>
+                <th scope="col">Проживание</th>
+                <th scope="col">Редактирование</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for event in events_list %}
+            <tr id={{ event.id }}>
+                <th> {{ event.event_name }}</th>
+                <td> {{ event.date_start }} </td>
+                <td> {{ event.date_finish }} </td>
+                <td> {{ event.country_id }} </td>
+                <td> {{ event.type_id }} </td> 
+                <td> {{ event.flight }} </td> 
+                <td> {{ event.meals }} </td> 
+                <td> {{ event.accommodation }} </td> 
+                <td> <a href="/event/edit/{{ event.id }}">Редактировать</a> </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

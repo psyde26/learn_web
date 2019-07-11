@@ -41,8 +41,8 @@ def upgrade():
     op.create_table('event',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('event_name', sa.String(), nullable=False),
-    sa.Column('date_start', sa.DateTime(), nullable=False),
-    sa.Column('date_finish', sa.DateTime(), nullable=False),
+    sa.Column('date_start', sa.DateTime()),
+    sa.Column('date_finish', sa.DateTime()),
     sa.Column('country_id', sa.Integer(), nullable=False),
     sa.Column('type_id', sa.Integer(), nullable=False),
     sa.Column('flight', sa.Boolean(), nullable=False),
@@ -51,6 +51,15 @@ def upgrade():
     sa.Column('event_creator_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['country_id'], ['country.id'], ),
     sa.ForeignKeyConstraint(['type_id'], ['type.id'], ),
+    sa.ForeignKeyConstraint(['event_crator_id'], ['user.id']),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('user_event',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('event_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['event_id'], ['event.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###

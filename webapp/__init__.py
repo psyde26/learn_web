@@ -5,6 +5,7 @@ from flask_migrate import Migrate
 from webapp.db import db
 from webapp.user.models import User
 from webapp.event.models import Event, Type, Country
+from webapp.userevent.models import UserEvent
 from webapp.user.views import blueprint as user_blueprint
 from webapp.admin.views import blueprint as admin_blueprint
 from webapp.event.views import blueprint as event_blueprint

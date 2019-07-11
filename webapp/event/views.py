@@ -113,7 +113,7 @@ def update_record(id):
 
         db_session.commit()
 
-        return redirect(url_for("/all-event"))
+        return redirect(url_for("/all-events"))
     else:
         new_event = Event.query.get(id)
         new_event.event_name = new_event.event_name

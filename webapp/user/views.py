@@ -3,6 +3,8 @@ from flask_login import login_required, login_user, logout_user, current_user
 
 from webapp.user.forms import LoginForm, RegistrationForm
 from webapp.user.models import User
+from webapp.userevent.models import UserEvent
+from webapp.event.models import Event, Country, Type
 from webapp import db
 
 blueprint = Blueprint('user', __name__, url_prefix='/users')
@@ -58,4 +60,19 @@ def process_reg():
 
     flash('Пожалуйста, исправьте ошибки в форме')
     return redirect('user.register')
+
+@blueprint.route('/subscriptions', methods=['GET'])
+def user_subscriptions():
+    title = 'Ваши подписки'
+    event_list = Event.query.all()
+    country_list = Country.query.all()
+    type_list = Type.query.all()
+    user_events = set(item.event_id for item in UserEvent.query.filter(UserEvent.user_id==current_user.id))
+    return render_template(
+        'user/subscriptions.html', 
+        page_title=title, 
+        event_list=event_list,
+        country_list=country_list,
+        type_list = type_list,
+        user_events=user_events)
     

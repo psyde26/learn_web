@@ -1,16 +1,26 @@
 {% extends "base.html" %}
 
 {% block title %} {{ page_title}} {% endblock %}
-
 {% block content %}
   <div class="container">
     <div class="row">
     {% for event in events_list %}
-        <div class="col">
+        <div class="col-6">
         <h3>{{ event.event_name }}</h3>
         <p>с {{ event.date_start.strftime('%d.%m.%Y') }} по {{ event.date_finish.strftime('%d.%m.%Y') }}</p>
-        <p>Страна: {{ event.country_id }}</p>
-        <p>Вид спорта: {{ event.type_id  }}</p>
+        <p>Страна: 
+          {% for country in country_list %}
+            {% if event.country_id==country.id %}
+              {{ country.country_name }}
+            {% endif %}
+          {% endfor %} 
+          </p>
+        <p>Вид спорта: 
+            {% for type in type_list %}
+            {% if event.type_id==type.id %}
+              {{ type.sport_name }}
+            {% endif %}
+          {% endfor %} </p>
         <p>Проживание: 
             {% if event.accommodation %}
             Включено
@@ -32,7 +42,7 @@
             Не включено
             {% endif %}
         </p>
-        <a href="{{ event.subscribe_link }}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Подписаться</a>
+        <a href="{{ event.subscribe_link }}" class="btn btn-outline-success"" role="button" aria-pressed="true">Подписаться</a>
         <hr />
 		  
     </div> 

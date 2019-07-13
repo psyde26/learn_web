@@ -12,7 +12,8 @@ def event():
     title = 'Предстоящие события'
     form = AllEventsForm()
     all_events = Event.query.all()
-    return render_template('event/index.html', page_title=title, form=form, all_events=all_events)
+    subscribed_events = set(item.event_id for item in UserEvent.query.filter(UserEvent.user_id==current_user.id))
+    return render_template('event/index.html', page_title=title, form=form, all_events=all_events, subscribed_events=subscribed_events)
 
 @blueprint.route('/new-event', methods=['GET'])
 def new_event():
@@ -49,7 +50,7 @@ def create_event():
 
 @blueprint.route('/<int:ev_id>/subscribe', methods=['GET'])
 def subscribe(ev_id):
-   
+    print(ev_id)
     new_subscribe = UserEvent(
             user_id = current_user.id,
             event_id = ev_id
@@ -57,6 +58,19 @@ def subscribe(ev_id):
     db.session.add(new_subscribe)
     db.session.commit()
     flash('Вы подписались на событие')
+    return redirect(url_for('event.event'))
+
+
+@blueprint.route('/<int:uns_ev_id>/unsubscribe', methods=['GET'])
+def unsubscribe(uns_ev_id):
+    print('uns = {uns_ev_id}')
+    unsubscribe = UserEvent.query.filter_by(event_id=uns_ev_id, user_id=current_user.id).delete()
+    # UserEvent.user_id = 0
+    # UserEvent.event_id = 0   
+   
+  
+    db.session.commit()
+    flash('Вы отписались от события')
     return redirect(url_for('event.event'))
 
  

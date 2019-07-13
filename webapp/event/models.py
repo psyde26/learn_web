@@ -46,6 +46,12 @@ class Event(db.Model):
         if self.id:
             return url_for('event.subscribe', ev_id=self.id)
 
+    @property
+    def unsubscribe_link(self):
+        if self.id:
+            return url_for('event.unsubscribe', uns_ev_id=self.id)
+    
+
 #Subscribe
 class UserEvent(db.Model):
     id = db.Column(db.Integer, primary_key=True)

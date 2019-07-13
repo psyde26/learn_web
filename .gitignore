@@ -1,9 +1,12 @@
+webapp.db
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+config_local.py
+run.bat
 .vscode/
-config.py
 *.db
 
 # C extensions

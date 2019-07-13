@@ -27,10 +27,13 @@ def event():
 
 @blueprint.route('/new', methods=['GET', 'POST'])
 @blueprint.route('/edit/<int:ev_id>', methods=['GET', 'POST'])
-@admin_required
 def new_event(ev_id=None):
     title = 'Редактировать событие' if ev_id else 'Новое событие'
     form = EventForm()
+    form.country_id.choices = [
+    (country.id, country.country_name) for country in Country.query.order_by('country_name')
+]
+    form.type_id.choices = [(t.id, t.sport_name) for t in Type.query.order_by('sport_name')]
     if request.method == 'GET':
         if ev_id:
             form = EventForm(obj=Event.query.get(ev_id))
@@ -87,4 +90,14 @@ def subscribe(ev_id):
     db.session.add(new_subscribe)
     db.session.commit()
     flash('Вы подписались на событие')
+    return redirect(url_for('event.event'))
+
+@blueprint.route('/<int:ev_id>/delete', methods=['GET'])
+def delete_event(ev_id):
+
+    obj=Event.query.get(ev_id)
+    
+    db.session.delete(obj)
+    db.session.commit()
+    flash('Событие удалено')
     return redirect(url_for('event.event'))

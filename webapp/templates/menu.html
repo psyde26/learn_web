@@ -26,9 +26,6 @@
             <a class="dropdown-item" href="{{ url_for('user.user_subscriptions')}}">Ваши подписки</a>
           </div>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('user.logout')}}">Выйти</a>
-      </li>
       <span class="navbar-text">
           {% if current_user.is_authenticated %}
             <h8>{{ 'Вы вошли под именем: ' }}{{ current_user.username }}</h8>
@@ -36,6 +33,9 @@
             <h8>{{ 'Пользователь не авторизован' }}</h8>
           {% endif %} 
       </span>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('user.logout')}}">Выйти</a>
+      </li>
       </ul>
     </div>
 </nav>

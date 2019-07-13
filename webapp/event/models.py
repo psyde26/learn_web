@@ -45,3 +45,13 @@ class Event(db.Model):
     def subscribe_link(self):
         if self.id:
             return url_for('event.subscribe', ev_id=self.id)
+    
+    @property
+    def edit_link(self):
+        if self.id:
+            return url_for('event.new_event', ev_id=self.id)
+
+    @property
+    def delete_link(self):
+        if self.id:
+            return url_for('event.delete_event', ev_id=self.id)

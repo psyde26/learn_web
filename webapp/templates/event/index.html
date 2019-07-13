@@ -42,9 +42,16 @@
             Не включено
             {% endif %}
         </p>
-        <a href="{{ event.subscribe_link }}" class="btn btn-outline-success"" role="button" aria-pressed="true">Подписаться</a>
+          <a href="{{ event.subscribe_link }}" class="btn btn-outline-success" role="button" aria-pressed="true">Подписаться</a>
         <hr />
-		  
+        {% if current_user.is_admin or current_user.id == event.event_creator_id %}
+            <a href="{{ event.edit_link }}" class="btn btn-outline-success" role="button" aria-pressed="true">Редактировать событие</a>
+        {% endif %}
+        <hr />
+          {% if current_user.is_admin or current_user.id == event.event_creator_id %}
+            <a href="{{ event.delete_link }}" class="btn btn-outline-success" role="button" aria-pressed="true">Удалить событие</a>
+          {% endif %}
+        <hr />
     </div> 
     {% endfor %}
                         

@@ -14,14 +14,12 @@ blueprint = Blueprint('event', __name__, url_prefix='/event')
 def event():
     title = 'Предстоящие события'
     events_list = Event.query.all()
-    country_list = Country.query.all()
-    type_list = Type.query.all()
+    subscribed_events = set(item.event_id for item in UserEvent.query.filter(UserEvent.user_id==current_user.id))
     return render_template(
         'event/index.html', 
         page_title=title, 
         events_list=events_list,
-        country_list=country_list,
-        type_list=type_list,
+        subscribed_events=subscribed_events,
     )
     
 
@@ -90,6 +88,15 @@ def subscribe(ev_id):
     db.session.add(new_subscribe)
     db.session.commit()
     flash('Вы подписались на событие')
+    return redirect(url_for('event.event'))
+
+@blueprint.route('/<int:uns_ev_id>/unsubscribe', methods=['GET'])
+def unsubscribe(uns_ev_id):
+    print('uns = {uns_ev_id}')
+    unsubscribe = UserEvent.query.filter_by(event_id=uns_ev_id, user_id=current_user.id).delete()
+  
+    db.session.commit()
+    flash('Вы отписались от события')
     return redirect(url_for('event.event'))
 
 @blueprint.route('/<int:ev_id>/delete', methods=['GET'])

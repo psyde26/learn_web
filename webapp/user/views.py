@@ -65,14 +65,19 @@ def process_reg():
 def user_subscriptions():
     title = 'Ваши подписки'
     event_list = Event.query.all()
-    country_list = Country.query.all()
-    type_list = Type.query.all()
-    user_events = set(item.event_id for item in UserEvent.query.filter(UserEvent.user_id==current_user.id))
+    subscribed_events = set(item.event_id for item in UserEvent.query.filter(UserEvent.user_id==current_user.id))
     return render_template(
         'user/subscriptions.html', 
         page_title=title, 
         event_list=event_list,
-        country_list=country_list,
-        type_list = type_list,
-        user_events=user_events)
+        subscribed_events=subscribed_events)
+
+@blueprint.route('/<int:uns_ev_id>/unsubscribe', methods=['GET'])
+def unsubscribe(uns_ev_id):
+    print('uns = {uns_ev_id}')
+    unsubscribe = UserEvent.query.filter_by(event_id=uns_ev_id, user_id=current_user.id).delete()
+  
+    db.session.commit()
+    flash('Вы отписались от события')
+    return redirect(url_for('user.user_subscriptions'))
     

@@ -3,35 +3,16 @@
 {% block title %} {{ page_title}} {% endblock %}
 
 {% block content %}
-  <div class="container">
-    <h1>{{ page_title }}</h1>
-      <div class="row">
-        <div class="col-12">
+<div class='container' style='margin: 0 auto'>
+    <div style='margin: 0 auto; max-width: 500px'>
+        <h1>{{ page_title }}</h1>
           {% for event in event_list %}
-            {% for sub_event in user_events %}
+            {% for sub_event in subscribed_events %}
               {% if sub_event == event.id %}
                 <h3>{{ event.event_name }}</h3>
                 <p>с {{ event.date_start.strftime('%d.%m.%Y') }} по {{ event.date_finish.strftime('%d.%m.%Y') }}</p>
-                <p>Страна: 
-                  {% for country in country_list %}
-                    {% if event.country_id==country.id %}
-                      {{ country.country_name }}
-                    {% endif %}
-                  {% endfor %} 
-                  </p>
-                <p>Вид спорта: 
-                    {% for type in type_list %}
-                    {% if event.type_id==type.id %}
-                      {{ type.sport_name }}
-                    {% endif %}
-                  {% endfor %} </p>
-                <p>Проживание: 
-                    {% if event.accommodation %}
-                    Включено
-                    {% else %}
-                    Не включено
-                    {% endif %}
-                </p>
+                <p>Страна: {{ event.country.country_name }}</p>
+                <p>Вид спорта: {{ event.type.sport_name }}</p>
                 <p>Перелет: 
                     {% if event.flight %}
                     Включен
@@ -46,6 +27,19 @@
                     Не включено
                     {% endif %}
                 </p>
+                <p>Проживание:
+                    {% if event.accommodation %}
+                    Включено
+                    {% else %}
+                    Не включено
+                    {% endif %}
+                </p>
+                
+                <p>          
+                  {% if event.id in subscribed_events %}
+                    <a href="{{ event.unsubscribe_user_link }}" class="btn btn-outline-success" role="button" aria-pressed="true">Отписаться</a>
+                  {% endif %}
+                  </p>
               {% endif %}
             {% endfor %}
           {% endfor %}

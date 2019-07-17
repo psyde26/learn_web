@@ -45,6 +45,16 @@ class Event(db.Model):
     def subscribe_link(self):
         if self.id:
             return url_for('event.subscribe', ev_id=self.id)
+
+    @property
+    def unsubscribe_event_link(self):
+        if self.id:
+            return url_for('event.unsubscribe', uns_ev_id=self.id)
+        
+    @property
+    def unsubscribe_user_link(self):
+        if self.id:
+            return url_for('user.unsubscribe', uns_ev_id=self.id)
     
     @property
     def edit_link(self):

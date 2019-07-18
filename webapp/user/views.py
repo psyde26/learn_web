@@ -1,5 +1,6 @@
 from flask import Flask, render_template, flash, redirect, url_for, Blueprint
 from flask_login import login_required, login_user, logout_user, current_user
+from datetime import datetime
 
 from webapp.user.forms import LoginForm, RegistrationForm
 from webapp.user.models import User
@@ -66,10 +67,12 @@ def user_subscriptions():
     title = 'Ваши подписки'
     event_list = Event.query.all()
     subscribed_events = set(item.event_id for item in UserEvent.query.filter(UserEvent.user_id==current_user.id))
+    today = datetime.today()
     return render_template(
         'user/subscriptions.html', 
         page_title=title, 
         event_list=event_list,
+        today=today,
         subscribed_events=subscribed_events)
 
 @blueprint.route('/<int:uns_ev_id>/unsubscribe', methods=['GET'])

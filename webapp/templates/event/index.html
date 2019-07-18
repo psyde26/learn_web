@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %} {{ page_title}} {% endblock %}
+{% block title %} {{ page_title }} {% endblock %}
 {% block content %}
-  <div class="container">
-    <div class="row">
+  <div class="col-md-12 mb-4 white-text text-center">
+      <h1 class="h1-reponsive text-black text-uppercase font-weight-bold mb-0 pt-md-5 pt-5 wow fadeInDown"><strong>Доступные события</strong></h1>
+  </div>
+    <div class="container">
+    <div class="row col-md-12 mb-4 white-text text-center">
     {% for event in events_list %}
         <div class="col-6">
         <h3>{{ event.event_name }}</h3>
@@ -32,20 +35,20 @@
             {% endif %}
         </p>
           {% if event.id in subscribed_events %}
-          <a href="{{ event.unsubscribe_event_link }}" class="btn btn-outline-success" role="button" aria-pressed="true">Отписаться</a>
+          <a href="{{ event.unsubscribe_event_link }}" class="btn btn-dark" role="button" aria-pressed="true">Отписаться</a>
 
           {%else%}
 
-          <a href="{{ event.subscribe_link }}" class="btn btn-outline-success" role="button" aria-pressed="true">Подписаться</a>
+          <a href="{{ event.subscribe_link }}" class="btn btn-dark" role="button" aria-pressed="true">Подписаться</a>
 
           {% endif %}
         </p>
           {% if current_user.is_admin or current_user.id == event.event_creator_id %}
-              <a href="{{ event.edit_link }}" class="btn btn-outline-success" role="button" aria-pressed="true">Редактировать событие</a>
+              <a href="{{ event.edit_link }}" class="btn btn-dark" role="button" aria-pressed="true">Редактировать событие</a>
           {% endif %}
         </p>
           {% if current_user.is_admin or current_user.id == event.event_creator_id %}
-            <a href="{{ event.delete_link }}" class="btn btn-outline-success" role="button" aria-pressed="true">Удалить событие</a>
+            <a href="{{ event.delete_link }}" class="btn btn-dark" role="button" aria-pressed="true">Удалить событие</a>
           {% endif %}
         </p>
     </div> 

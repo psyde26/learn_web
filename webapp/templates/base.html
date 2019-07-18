@@ -7,17 +7,18 @@
  
      <!-- Bootstrap CSS -->
      <link href="{{url_for('static', filename = 'style.css')}}">
+     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 
     {% block head %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <title>{% block title %}{% endblock %} - Surftravel portal</title>
+    <title> Surftravel portal</title>
     {% endblock %}
 </head>
 <body>
     {% include 'menu.html' %}
     {% with messages = get_flashed_messages() %}
         {% if messages %}
-            <div class="alert alert-warning" role="alert">
+            <div class="alert alert-dark" role="alert">
                 {% for message in messages %}
                     {{ message }}<br>
                 {% endfor %}
@@ -25,6 +26,9 @@
         {% endif %}
     {% endwith %}
     <div id="content">
+            <style>
+                    body { background: rgb(214, 209, 209); }
+            </style>
         {% block content %}{% endblock %}
     </div>
     <div id="footer">

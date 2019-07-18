@@ -1,6 +1,6 @@
-webapp.db
+*.db
 #VSCODE
-.vscode
+.vscode/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

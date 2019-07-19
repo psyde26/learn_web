@@ -9,27 +9,29 @@
 {% block content %}
     <div class='container' style='margin: 0 auto'>
         <div style='margin: 0 auto; max-width: 500px'>
-            <h1>{{ page_title }}</h1>
-            <form action="{{ url_for('user.process_reg') }}" method="POST">
-                {{ form.hidden_tag() }}
-                <div class='form-group'>
-                    {{ form.username.label }}
-                    {{ form.username() }}
-                </div>
-                <div class='form-group'>
-                    {{ form.email.label }}
-                    {{ form.email() }}
-                </div>
-                <div class='form-group'>
-                    {{ form.password.label }}
-                    {{ form.password() }}
-                </div>
-                <div class='form-group'>
-                    {{ form.password2.label }}
-                    {{ form.password2() }}
-                </div>
-                {{ form.submit() }}
-            </form>
+            <div class="col-md-12 mb-4 white-text text-center">
+                <h1 class="h1-reponsive text-black text-uppercase font-weight-bold mb-0 pt-md-5 pt-5 wow fadeInDown"><strong>{{ page_title }}</strong></h1>
+                <form action="{{ url_for('user.process_reg') }}" method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class='form-group'>
+                        {{ form.username.label }}
+                        {{ form.username() }}
+                    </div>
+                    <div class='form-group'>
+                        {{ form.email.label }}
+                        {{ form.email() }}
+                    </div>
+                    <div class='form-group'>
+                        {{ form.password.label }}
+                        {{ form.password() }}
+                    </div>
+                    <div class='form-group'>
+                        {{ form.password2.label }}
+                        {{ form.password2() }}
+                    </div>
+                    {{ form.submit() }}
+                </form>
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -2,10 +2,11 @@ from flask import Flask, render_template, flash, redirect, url_for, Blueprint, r
 from flask_login import current_user, login_required
 from datetime import datetime
 
-from webapp.event.forms import EventForm
-from webapp.event.models import Event, Type, Country, db
+from webapp.event.forms import EventForm, CommentForm
+from webapp.event.models import Event, Type, Country, db, Comment
 from webapp.userevent.models import UserEvent
 from webapp.user.decorators import admin_required
+
 
 
 blueprint = Blueprint('event', __name__, url_prefix='/event')
@@ -14,12 +15,19 @@ blueprint = Blueprint('event', __name__, url_prefix='/event')
 def event():
     title = 'Предстоящие события'
     events_list = Event.query.all()
+    country_list = Country.query.all()
+    type_list = Type.query.all()
     subscribed_events = set(item.event_id for item in UserEvent.query.filter(UserEvent.user_id==current_user.id))
+    
+    form = CommentForm()
     return render_template(
         'event/index.html', 
         page_title=title, 
         events_list=events_list,
-        subscribed_events=subscribed_events,
+        country_list=country_list,
+        type_list=type_list,
+        comment_form=form,
+        subscribed_events=subscribed_events
     )
     
 
@@ -94,6 +102,9 @@ def subscribe(ev_id):
 def unsubscribe(uns_ev_id):
     print('uns = {uns_ev_id}')
     unsubscribe = UserEvent.query.filter_by(event_id=uns_ev_id, user_id=current_user.id).delete()
+    # UserEvent.user_id = 0
+    # UserEvent.event_id = 0   
+   
   
     db.session.commit()
     flash('Вы отписались от события')
@@ -108,3 +119,24 @@ def delete_event(ev_id):
     db.session.commit()
     flash('Событие удалено')
     return redirect(url_for('event.event'))
+
+@blueprint.route('/event/comment/<int:ev_id>', methods=['POST'])
+@login_required
+def add_comment(ev_id):
+    form = CommentForm()
+    if form.validate_on_submit():
+        if Event.query.filter(Event.id == ev_id).first():
+            comment = Comment(text=form.comment_text.data, event_id=ev_id, user_id=current_user.id)
+            db.session.add(comment)
+            db.session.commit()
+            flash('Комментарий успешно добавлен')
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash('Ошибка в заполнении поля "{}": - {}'.format(
+                        getattr(form, field).label.text,
+                        error
+                    ))
+    else:
+        flash('Ошибка валидации')
+    return redirect(request.referrer)

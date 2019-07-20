@@ -1,6 +1,6 @@
 from flask_login import UserMixin
 from flask import url_for
-from datetime import date
+from datetime import date, datetime
 
 from webapp.db import db
 
@@ -65,3 +65,24 @@ class Event(db.Model):
     def delete_link(self):
         if self.id:
             return url_for('event.delete_event', ev_id=self.id)
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.Text, nullable=False)
+    created = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    event_id = db.Column(
+        db.Integer,
+        db.ForeignKey('event.id', ondelete='CASCADE'),
+        index=True
+    )
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey('user.id', ondelete='CASCADE'),
+        index=True
+    )
+
+    event = db.relationship('Event', backref='comments')
+    user = db.relationship('User', backref='comments')
+
+    def __repr__(self):
+        return '<Comment {}>'.format(self.id)

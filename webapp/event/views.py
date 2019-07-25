@@ -9,14 +9,12 @@ from webapp.user.decorators import admin_required
 
 
 
-blueprint = Blueprint('event', __name__, url_prefix='/event')
+blueprint = Blueprint('event', __name__, url_prefix='/events')
 
 @blueprint.route('/', methods = ['GET'])
 def event():
-    title = 'Предстоящие события'
+    title = 'Доступные события'
     events_list = Event.query.all()
-    country_list = Country.query.all()
-    type_list = Type.query.all()
     subscribed_events = set(item.event_id for item in UserEvent.query.filter(UserEvent.user_id==current_user.id))
     
     form = CommentForm()
@@ -24,9 +22,24 @@ def event():
         'event/index.html', 
         page_title=title, 
         events_list=events_list,
-        country_list=country_list,
-        type_list=type_list,
         comment_form=form,
+        subscribed_events=subscribed_events,
+    )
+
+@blueprint.route('/<int:ev_id>', methods = ['GET'])
+def one_event(ev_id):
+
+    ev_form = Event.query.filter_by(id=ev_id).first()
+    title = ev_form.event_name
+    form = CommentForm()
+    subscribed_events = set(item.event_id for item in UserEvent.query.filter(UserEvent.user_id==current_user.id))
+    
+    return render_template(
+        'event/one_event.html', 
+        page_title=title, 
+        ev_id=ev_id,
+        comment_form=form,
+        ev_form=ev_form,
         subscribed_events=subscribed_events
     )
     
@@ -96,19 +109,17 @@ def subscribe(ev_id):
     db.session.add(new_subscribe)
     db.session.commit()
     flash('Вы подписались на событие')
-    return redirect(url_for('event.event'))
+    return redirect(url_for('event.one_event', ev_id=ev_id))
 
 @blueprint.route('/<int:uns_ev_id>/unsubscribe', methods=['GET'])
 def unsubscribe(uns_ev_id):
     print('uns = {uns_ev_id}')
     unsubscribe = UserEvent.query.filter_by(event_id=uns_ev_id, user_id=current_user.id).delete()
-    # UserEvent.user_id = 0
-    # UserEvent.event_id = 0   
-   
+  
   
     db.session.commit()
     flash('Вы отписались от события')
-    return redirect(url_for('event.event'))
+    return redirect(url_for('event.one_event', ev_id=uns_ev_id))
 
 @blueprint.route('/<int:ev_id>/delete', methods=['GET'])
 def delete_event(ev_id):
@@ -118,7 +129,7 @@ def delete_event(ev_id):
     db.session.delete(obj)
     db.session.commit()
     flash('Событие удалено')
-    return redirect(url_for('event.event'))
+    return redirect(url_for('event.one_event', ev_id=ev_id))
 
 @blueprint.route('/event/comment/<int:ev_id>', methods=['POST'])
 @login_required

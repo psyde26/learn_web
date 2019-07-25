@@ -66,6 +66,12 @@ class Event(db.Model):
         if self.id:
             return url_for('event.delete_event', ev_id=self.id)
 
+    @property
+    def one_event_link(self):
+        if self.id:
+            return url_for('event.one_event', ev_id=self.id)
+
+
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)
